@@ -4,9 +4,9 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -21,10 +21,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $uuid;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\Email(message: 'Email is not correct')]
     private ?string $email = null;
 
     #[ORM\Column]
     private array $roles = [];
+
+    #[Assert\Length(min: 3, minMessage: 'Passwort must be at least {{ limit }} characters long')]
+    private ?string $plainPassword;
 
     /**
      * @var string The hashed password
@@ -32,10 +36,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    public function __construct(string $uuid, string $email)
+    public function __construct(string $uuid, string $email, string $plainPassword)
     {
         $this->uuid = $uuid;
         $this->email = $email;
+        $this->plainPassword = $plainPassword;
     }
 
     public function getId(): ?int
@@ -95,6 +100,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->plainPassword = null;
     }
 }
