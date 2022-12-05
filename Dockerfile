@@ -17,4 +17,4 @@ RUN symfony server:ca:install
 
 EXPOSE 8000
 
-CMD symfony serve
+CMD php bin/console doctrine:migrations:migrate -n && symfony serve

@@ -16,7 +16,6 @@ class RegisterUserHandler
 
     public function handle(RegisterUserCommand $command)
     {
-        // TODO: dodać do dockera drivery do postgresa
         $user = new User();
         $user->setEmail($command->getEmail());
         $user->setPassword(
