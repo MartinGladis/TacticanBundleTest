@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Command;
+use Symfony\Component\HttpFoundation\Request;
 
 class RegisterUserCommand
 {
@@ -17,5 +18,12 @@ class RegisterUserCommand
     public function getPlainPassword(): string
     {
         return $this->plainPassword;
+    }
+
+    public static function fromRequest(Request $request): self
+    {
+        $content = json_decode($request->getContent(), true);
+
+        return new static($content["email"], $content["password"]);
     }
 }

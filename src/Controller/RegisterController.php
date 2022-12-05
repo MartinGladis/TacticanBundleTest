@@ -19,8 +19,7 @@ class RegisterController extends AbstractController
     public function register(Request $request): JsonResponse
     {
         try {
-            $content = json_decode($request->getContent(), true);
-            $command = new RegisterUserCommand($content['email'], $content['password']);
+            $command = RegisterUserCommand::fromRequest($request);
 
             $this->commandBus->handle($command);
 
