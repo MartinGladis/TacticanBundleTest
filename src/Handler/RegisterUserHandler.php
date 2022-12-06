@@ -6,7 +6,6 @@ use App\Command\RegisterUserCommand;
 use App\Repository\UserRepository;
 use App\Service\MailSender;
 use App\Service\UserFactory;
-use Ramsey\Uuid\Uuid;
 
 class RegisterUserHandler
 {
@@ -18,9 +17,8 @@ class RegisterUserHandler
 
     public function handle(RegisterUserCommand $command)
     {
-        $uuid = Uuid::uuid4();
         $user = $this->userFactory->create(
-            $uuid,
+            $command->getUuid(),
             $command->getEmail(),
             $command->getPlainPassword()
         );

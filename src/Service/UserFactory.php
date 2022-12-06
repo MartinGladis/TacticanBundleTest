@@ -13,7 +13,7 @@ class UserFactory
         private UserPasswordHasherInterface $passwordHasher
     ) {}
 
-    public function create($uuid, $email, $plainPassword)
+    public function create(string $uuid, string $email, string $plainPassword)
     {
         $user = new User(
             $uuid,
