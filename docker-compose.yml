@@ -10,6 +10,16 @@ services:
             - db-data:/var/lib/postgresql/data
         ports:
             - 5432:5432
+    database-test:
+        image: postgres:15
+        environment:
+            POSTGRES_USER: app
+            POSTGRES_PASSWORD: qwerty12345
+            POSTGRES_DB: app_test
+        volumes:
+            - db-data-test:/var/lib/postgresql/data
+        ports:
+            - 5433:5432
     php:
         build: .
         image: php
@@ -17,7 +27,9 @@ services:
             - 8000:8000
         depends_on:
             - database
+            - database-test
         volumes:
             - ./:/app
 volumes:
     db-data:
+    db-data-test:

@@ -15,4 +15,7 @@ RUN symfony server:ca:install
 
 EXPOSE 8000
 
-CMD composer install -n && php bin/console doctrine:migrations:migrate -n && symfony serve
+CMD composer install -n \
+    && php bin/console doctrine:migrations:migrate -n \
+    && php bin/console doctrine:migrations:migrate -n --env=test \
+    && symfony serve
