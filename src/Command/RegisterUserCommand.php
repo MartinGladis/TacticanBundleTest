@@ -17,7 +17,7 @@ class RegisterUserCommand
         private string $plainPassword
     ) {}
 
-    public function getUuid()
+    public function getUuid(): string
     {
         return $this->uuid;
     }
