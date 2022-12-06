@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Command\RegisterUserCommand;
+use League\Tactician\Bundle\Middleware\InvalidCommandException;
 use League\Tactician\CommandBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,9 +24,11 @@ class RegisterController extends AbstractController
 
             $this->commandBus->handle($command);
 
-            $message = "User Created";
             $code = 200;
-            
+            $message = "User Created";
+        } catch (InvalidCommandException $e) {
+            $code = 400;
+            $message = $e->getViolations()->get(0)->getMessage();
         } catch (\Throwable $e) {
             $code = 400;
             $message = $e->getMessage();

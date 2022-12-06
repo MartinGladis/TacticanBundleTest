@@ -13,4 +13,5 @@ tactician:
 # Doctrine transactional middleware, requires additional package - https://github.com/thephpleague/tactician-doctrine
 #                - tactician.middleware.doctrine
                 - tactician.middleware.logger
+                - tactician.middleware.validator
                 - tactician.middleware.command_handler

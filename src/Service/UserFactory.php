@@ -3,40 +3,25 @@
 namespace App\Service;
 
 use App\Entity\User;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 class UserFactory
 {
+    public function __construct(
+        private UserPasswordHasherInterface $passwordHasher
+    ) {}
 
-    private UserPasswordHasherInterface $passwordHasher;
-
-    private ValidatorInterface $validator;
-
-    public function __construct(UserPasswordHasherInterface $passwordHasher, ValidatorInterface $validator)
-    {
-        $this->passwordHasher = $passwordHasher;
-        $this->validator = $validator;
-    }
-
-    public function create($email, $plainPassword)
+    public function create($uuid, $email, $plainPassword)
     {
         $user = new User(
-            Uuid::uuid4(),
-            $email,
-            $plainPassword
+            $uuid,
+            $email
         );
 
-        $errors = $this->validator->validate($user);
-
-        if (count($errors) > 0) {
-            throw new \Exception($errors->get(0)->getMessage());
-        }
-
-        $user->eraseCredentials();
-        $user->setPassword($this->passwordHasher->hashPassword($user, $plainPassword));
+        $password = $this->passwordHasher->hashPassword($user, $plainPassword);
+        $user->setPassword($password);
 
         return $user;
     }
