@@ -11,10 +11,8 @@ RUN curl -sS https://get.symfony.com/cli/installer | bash
 WORKDIR /app
 COPY . .
 
-RUN composer install -n
-
 RUN symfony server:ca:install
 
 EXPOSE 8000
 
-CMD php bin/console doctrine:migrations:migrate -n && symfony serve
+CMD composer install -n && php bin/console doctrine:migrations:migrate -n && symfony serve

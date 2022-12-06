@@ -19,8 +19,5 @@ services:
             - database
         volumes:
             - ./:/app
-            - /app/vendor
-            - /app/var/cache
-            - /app/var/log
 volumes:
     db-data:

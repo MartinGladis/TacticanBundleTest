@@ -7,15 +7,14 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\MailSender;
 use App\Service\UserFactory;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Psr\Log\LoggerInterface;
 
 class RegisterUserHandler
 {
     public function __construct(
         private UserRepository $userRepository,
-        private UserPasswordHasherInterface $passwordHasher,
         private MailSender $mailSender,
-        private UserFactory $userFactory
+        private UserFactory $userFactory,
     ) {}
 
     public function handle(RegisterUserCommand $command)
