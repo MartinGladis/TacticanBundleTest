@@ -11,6 +11,8 @@ class RegisterControllerTest extends WebTestCase
 
     /**
      * @test
+     * @group controllerSuccess
+     * @group controller
      * @dataProvider succesfullDataProvider
      */
     public function itShouldUserRegister(array $content): void
@@ -27,6 +29,7 @@ class RegisterControllerTest extends WebTestCase
 
     /**
      * @test
+     * @group controller
      * @dataProvider invalidEmailDataProvider
      */
     public function itShouldReturnInvalidEmailMessage(array $content): void
@@ -46,6 +49,7 @@ class RegisterControllerTest extends WebTestCase
 
     /**
      * @test
+     * @group controller
      * @dataProvider invalidPasswordDataProvider
      */
     public function itShouldReturnInvalidPasswordMessage(array $content): void
