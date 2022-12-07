@@ -3,25 +3,24 @@
 namespace App\Service;
 
 use App\Entity\User;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 
 
 class UserFactory
 {
     public function __construct(
-        private UserPasswordHasherInterface $passwordHasher
+        private PasswordHasherInterface $passwordHasher
     ) {}
 
     public function create(string $uuid, string $email, string $plainPassword)
     {
+        $password = $this->passwordHasher->hash($plainPassword);
+
         $user = new User(
             $uuid,
-            $email
+            $email,
+            $password
         );
-
-        $password = $this->passwordHasher->hashPassword($user, $plainPassword);
-        $user->setPassword($password);
 
         return $user;
     }

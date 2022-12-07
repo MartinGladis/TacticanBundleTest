@@ -31,10 +31,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    public function __construct(string $uuid, string $email)
+    public function __construct(string $uuid, string $email, string $password)
     {
         $this->uuid = $uuid;
         $this->email = $email;
+        $this->password = $password;
     }
 
     public function getId(): ?int
@@ -79,13 +80,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getPassword(): string
     {
         return $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
     }
 
     /**
