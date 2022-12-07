@@ -5,6 +5,7 @@ namespace App\Tests\Service;
 use App\Entity\User;
 use App\Service\UserFactory;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 
 class UserFactoryTest extends TestCase
@@ -16,15 +17,22 @@ class UserFactoryTest extends TestCase
      */
     public function itShouldCreateCorrectUser($uuid, $email, $plainPassword): void
     {
-        $passwordHasherMock = $this->createMock(PasswordHasherInterface::class);
+        $passwordHasherStub = $this->createStub(PasswordHasherInterface::class);
+        $passwordHasherStub->method('hash')
+            ->willReturn('examplehashpassword');
 
-        $userFactory = new UserFactory($passwordHasherMock);
+        $passwordHasherFactoryStub = $this->createStub(PasswordHasherFactoryInterface::class);
+        $passwordHasherFactoryStub->method('getPasswordHasher')
+            ->willReturn($passwordHasherStub);
+
+        $userFactory = new UserFactory($passwordHasherFactoryStub);
         $user = $userFactory->create($uuid, $email, $plainPassword);
+
 
         $expectUser = new User(
             $uuid,
             $email,
-            $passwordHasherMock->hash($plainPassword)
+            'examplehashpassword'
         );
 
         $this->assertEquals($expectUser, $user);
