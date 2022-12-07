@@ -2,10 +2,13 @@
 
 namespace App\Tests\Controller;
 
+use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class RegisterControllerTest extends WebTestCase
 {
+    use ReloadDatabaseTrait;
+
     /**
      * @test
      * @dataProvider succesfullDataProvider
