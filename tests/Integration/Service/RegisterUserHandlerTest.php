@@ -2,7 +2,6 @@
 
 namespace App\Tests\Integration\Service;
 use App\Command\RegisterUserCommand;
-use App\Entity\User;
 use App\Handler\RegisterUserHandler;
 use App\Repository\UserRepository;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
