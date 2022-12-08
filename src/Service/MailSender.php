@@ -15,8 +15,8 @@ class MailSender
     public function registerConfirm(string $emailAddress)
     {
         $email = (new Email())
-            ->from(new Address('wodoted152@ceoshub.com', 'Confirm'))
-            ->to('martin@katosoftwarehouse.pl')
+            ->from(new Address('martin@katosoftwarehouse.pl', 'Confirm'))
+            ->to($emailAddress)
             ->subject('Registration Confirm')
             ->html("<h1>Confirm</h1>");
         
