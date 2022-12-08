@@ -9,6 +9,7 @@ use App\Repository\UserRepository;
 use App\Service\MailSender;
 use App\Service\UserFactory;
 use PHPUnit\Framework\TestCase;
+use Ramsey\Uuid\Uuid;
 
 class RegisterUserHandlerTest extends TestCase
 {
@@ -23,7 +24,7 @@ class RegisterUserHandlerTest extends TestCase
         $userFactory = $this->createMock(UserFactory::class);
         $userFactory->expects($this->once())
             ->method('create')
-            ->with('uuid', 'some@example.mail', 'examplePassword')
+            ->with($this->isType('string'), 'some@example.mail', 'examplePassword')
             ->willReturn($user);
 
         
@@ -43,13 +44,11 @@ class RegisterUserHandlerTest extends TestCase
             $userFactory
         );
 
-        $command = $this->createStub(RegisterUserCommand::class);
-        $command->method('getUuid')
-            ->willReturn('uuid');
-        $command->method('getEmail')
-            ->willReturn('some@example.mail');
-        $command->method('getPlainPassword')
-            ->willReturn('examplePassword');
+        $command = new RegisterUserCommand(
+            Uuid::uuid4(),
+            'some@example.mail',
+            'examplePassword'
+        );
 
         $handler->handle($command);
     }
