@@ -6,7 +6,7 @@ use App\Command\RegisterUserCommand;
 use App\Entity\User;
 use App\Handler\RegisterUserHandler;
 use App\Repository\UserRepository;
-use App\Service\MailSender;
+use App\Service\MailSenderInterface;
 use App\Service\UserFactory;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
@@ -33,7 +33,7 @@ class RegisterUserHandlerTest extends TestCase
             ->method('save')
             ->with($user);
 
-        $mailSender = $this->createMock(MailSender::class);
+        $mailSender = $this->createMock(MailSenderInterface::class);
         $mailSender->expects($this->once())
             ->method('registerConfirm')
             ->with('some@example.mail');

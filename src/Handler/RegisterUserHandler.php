@@ -4,14 +4,14 @@ namespace App\Handler;
 
 use App\Command\RegisterUserCommand;
 use App\Repository\UserRepository;
-use App\Service\MailSender;
+use App\Service\MailSenderInterface;
 use App\Service\UserFactory;
 
 class RegisterUserHandler
 {
     public function __construct(
         private UserRepository $userRepository,
-        private MailSender $mailSender,
+        private MailSenderInterface $mailSender,
         private UserFactory $userFactory,
     ) {}
 
