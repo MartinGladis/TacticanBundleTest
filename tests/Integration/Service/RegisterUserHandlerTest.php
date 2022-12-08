@@ -30,7 +30,7 @@ class RegisterUserHandlerTest extends KernelTestCase
      * @group integrationHandler
      * @dataProvider userDataProvider
      */
-    public function itShouldSaveUserToDb($email, $plainPassword): void
+    public function itShouldSaveUserToDb($email, $plainPassword): void 
     {
 
         $handler = $this->container->get(RegisterUserHandler::class);
@@ -46,7 +46,7 @@ class RegisterUserHandlerTest extends KernelTestCase
 
         $user = $this->userRepository->findOneBy(['email' => $email]);
 
-        $this->assertNotNull($user);
+        $this->assertEquals($email, $user->getEmail());
     }
 
     public function userDataProvider(): array
