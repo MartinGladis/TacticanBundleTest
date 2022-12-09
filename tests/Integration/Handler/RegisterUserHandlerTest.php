@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Tests\Integration\Service;
+namespace App\Tests\Integration\Handler;
 use App\Command\RegisterUserCommand;
 use App\Handler\RegisterUserHandler;
 use App\Repository\UserRepository;
+use App\Service\MailSenderInterface;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 use Ramsey\Uuid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -46,6 +47,20 @@ class RegisterUserHandlerTest extends KernelTestCase
         $user = $this->userRepository->findOneBy(['email' => $email]);
 
         $this->assertEquals($email, $user->getEmail());
+    }
+
+    /**
+     * @test
+     * @group integrationHandler
+     * @dataProvider userDataProvider
+     */
+    public function itShouldEmailSend($email, $plainPassword)
+    {
+        $mailSender = $this->container->get(MailSenderInterface::class);
+
+        $mailSender->registerConfirm($email);
+
+        $this->assertEquals($email, $mailSender->getMessages()->last());
     }
 
     public function userDataProvider(): array
