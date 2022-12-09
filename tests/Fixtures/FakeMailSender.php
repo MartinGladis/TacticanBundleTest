@@ -5,7 +5,7 @@ use App\Service\MailSenderInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
-class TestMailSender implements MailSenderInterface
+class FakeMailSender implements MailSenderInterface
 {
     public Collection $messages;
 

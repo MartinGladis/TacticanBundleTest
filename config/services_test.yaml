@@ -2,4 +2,4 @@ services:
     App\Tests\:
         resource: '../tests/'
     
-    App\Service\MailSenderInterface: '@App\Tests\Fixtures\TestMailSender'
+    App\Service\MailSenderInterface: '@App\Tests\Fixtures\FakeMailSender'
